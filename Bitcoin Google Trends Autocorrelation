@@ -1,0 +1,26 @@
+if(!require(gtrendsR)){
+  install.packages('gtrendsR')
+}
+if(!require(quantmod)){
+  install.packages('quantmod')
+}
+library(gtrendsR)
+library(quantmod)
+getSymbols('BTC-USD', from = '2015-01-01', to = '2022-10-01', periodicity = 'monthly')
+gtrend <- gtrends(keyword = 'bitcoin', time = '2015-01-01 2022-10-01', onlyInterest = TRUE)
+plot(gtrend)
+plot(Cl(`BTC-USD`))
+dates <- gtrend$interest_over_time$date
+dates <- as.Date(dates)
+hits <- gtrend$interest_over_time$hits
+hits <- xts(x = hits, order.by = dates)
+close <- Cl(`BTC-USD`)
+close <- as.numeric(close)
+hits <- as.numeric(hits)
+# This function measures the crosscorrelation of Bitcoin and Google Trends data. 
+# The graph shows that past google searches potentially have an effect on present bitcoin prices.
+# Further 
+ccf <- ccf(x = close, y = hits)
+ccf
+head(ccf)
+cor(close, hits)
