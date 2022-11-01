@@ -24,3 +24,12 @@ ccf <- ccf(x = close, y = hits)
 ccf
 head(ccf)
 cor(close, hits)
+## Next, I am going to run the granger causaulity test to determine the p value and therefore potential causality.
+## First, I am going to transform the data to stationary. Differencing will not work on its own because there would still be a non constant variance. So I am using log10 as well to reduce variability.
+library(lmtest)
+dclose <- log10(close)
+dclose <- diff(dclose)
+dhits <- log10(hits)
+dhits <- diff(dhits)
+grangertest(x = dclose, y = dhits, order = 3) # Predicts monthly bitcoin return with lags of search interest.
+# The p value is < .05 at .002628. Therefore, interest possibly causes changes in bitcoin's price.
