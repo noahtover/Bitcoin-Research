@@ -31,5 +31,6 @@ dclose <- log10(close)
 dclose <- diff(dclose)
 dhits <- log10(hits)
 dhits <- diff(dhits)
-grangertest(x = dclose, y = dhits, order = 3) # Predicts monthly bitcoin return with lags of search interest.
-# The p value is < .05 at .002628. Therefore, interest possibly causes changes in bitcoin's price.
+grangertest(x = dclose, y = dhits, order = 3) # Predicts search interest return with lags of bitcoin.
+grangertest(x = dhits, y = dclose, order = 3) # Predicts monthly bitcoin with lags of search interest.
+# Considering the results of the granger test, bitcoin may cause interest. This could be because people chase returns, and the large rallies in Bitcoin draw them to invest.
