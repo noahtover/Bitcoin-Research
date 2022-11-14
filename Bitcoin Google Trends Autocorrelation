@@ -8,8 +8,6 @@ library(gtrendsR)
 library(quantmod)
 getSymbols('BTC-USD', from = '2015-01-01', to = '2022-10-01', periodicity = 'monthly')
 gtrend <- gtrends(keyword = 'bitcoin', time = '2015-01-01 2022-10-01', onlyInterest = TRUE)
-plot(gtrend)
-plot(Cl(`BTC-USD`))
 dates <- gtrend$interest_over_time$date
 dates <- as.Date(dates)
 hits <- gtrend$interest_over_time$hits
@@ -24,6 +22,10 @@ ccf <- ccf(x = close, y = hits)
 ccf
 head(ccf)
 cor(close, hits)
+# Next, I am going to visualize the data to compare patterns in each
+par(mfcol = c(2,1))
+plot(x = dates, y = hits, main = "Google Search Trends for 'bitcoin'" , type = 'l')
+plot(x = dates, y =close, main = 'Monthly Bitcoin Closing Price', type = 'l')
 ## Next, I am going to run the granger causaulity test to determine the p value and therefore potential causality.
 ## First, I am going to transform the data to stationary. Differencing will not work on its own because there would still be a non constant variance. So I am using log10 as well to reduce variability.
 library(lmtest)
