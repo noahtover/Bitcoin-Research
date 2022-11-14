@@ -16,7 +16,6 @@ close <- Cl(`BTC-USD`)
 close <- as.numeric(close)
 hits <- as.numeric(hits)
 # This function measures the crosscorrelation of Bitcoin and Google Trends data. 
-# The graph shows that past google searches potentially have an effect on present bitcoin prices.
 # Further 
 ccf <- ccf(x = close, y = hits)
 ccf
@@ -26,6 +25,7 @@ cor(close, hits)
 par(mfcol = c(2,1))
 plot(x = dates, y = hits, main = "Google Search Trends for 'bitcoin'" , type = 'l')
 plot(x = dates, y =close, main = 'Monthly Bitcoin Closing Price', type = 'l')
+# This graph clearly shows Bitcoin increases precede increases in Google Searches for 'bitcoin'
 ## Next, I am going to run the granger causaulity test to determine the p value and therefore potential causality.
 ## First, I am going to transform the data to stationary. Differencing will not work on its own because there would still be a non constant variance. So I am using log10 as well to reduce variability.
 library(lmtest)
